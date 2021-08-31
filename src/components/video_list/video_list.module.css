@@ -1,9 +1,8 @@
 .videos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     padding: 1em;
     list-style: none;
-    background-color: darkgray;
-  
+    margin:0;
   }
   

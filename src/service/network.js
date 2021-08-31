@@ -6,6 +6,7 @@ class Network {
             redirect: 'follow' 
           };
     }
+    
 
     async mostPopular(){
         const response = await fetch(

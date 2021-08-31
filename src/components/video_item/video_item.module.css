@@ -5,6 +5,10 @@
     box-sizing: border-box;
   
   }
+
+  .container.grid {
+    margin: 0.5em;
+  }
   
   .container:hover {
     transform: scale(1.02);

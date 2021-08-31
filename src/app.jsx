@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import VideoList from './components/video_list/video_list';
 import styles from './app.module.css';
 import SearchHeader from './components/search_header/search_header';
+import VideoDetail from './components/video_detail/video_detail';
 
 function App({network}) {
   const [videos, setVideos]= useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-  const search = (query)=> {
-    network
-    .search(query)
-    .then(videos=> setVideos(videos))
-    .catch(error => console.log('error', error));
-  
+  const selectVideo = (video)=> {
+    setSelectedVideo(video);
   }
+
+  const search = useCallback((query) => {
+
+      network
+      .search(query)
+      .then(videos=> {
+        setVideos(videos)
+      setSelectedVideo(null);
+  
+      })
+      .catch(error => console.log('error', error));
+      
+    }, [network]
+  )
   
   useEffect(()=> {
       network
@@ -23,8 +35,17 @@ function App({network}) {
 
   return (
     <div className = {styles.app}>                
-      <SearchHeader onSearch = {search}/>         
-      <VideoList videos={videos}/>
+      <SearchHeader onSearch = {search}/>
+      <section className={styles.content}>
+      {selectedVideo &&
+        <div className={styles.detail}>
+         <VideoDetail video={selectedVideo}/>
+        </div> 
+      }    
+        <div className = {styles.list}>
+        <VideoList videos={videos} onVideoClick = {selectVideo} display={selectedVideo ? 'list' : 'grid'}/>
+        </div>    
+      </section>
     </div>
   )
 }
